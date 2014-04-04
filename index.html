@@ -8,10 +8,11 @@
        <script src="cordova.js"></script>
    <!--  <script src="plugins/plugin-loader.js"></script> -->
     <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
-    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+   
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/extras.css" rel="stylesheet"> 
-    <script>
+     <script type="text/javascript" src="js/jquery.min.js"></script>
+     <script>
         // Set virtual screen width size to 640 pixels
         //monaca.viewport({width: 640});
 
@@ -74,12 +75,12 @@
             var ft = new FileTransfer();
             ft.upload(imageURI, "http://exolvetechnologies.com/gcode/api/upload", win, fail, options);
 
-            location();
+            locate();
           
         }
 
 
-    function location(){
+    function locate(){
 
     var suc = function(p) {
         navigator.notification.alert(p.coords.latitude + " " + p.coords.longitude);
@@ -104,18 +105,18 @@
   <body>
 
 
-			<div class="container">
-            	<div class="row">
+      <div class="container">
+              <div class="row">
                 
-                	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                          <nav class="nav nav-stacked navbar-fixed-top">
-                        	<a href="#" class="logo"><img src="images/g-code-logo.jpg" /></a>
+                          <a href="#" class="logo"><img src="images/g-code-logo.jpg" /></a>
                             
                             <ul>
-                            	<li><a href="#">About <i class="fa fa-location-arrow"></i></a></li>
+                              <li><a href="#">About <i class="fa fa-location-arrow"></i></a></li>
                             </ul>
-                         </nav>	
+                         </nav> 
 
                     </div>
                    </div>
@@ -136,7 +137,7 @@
                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                
                     <div class="border-rad" id="camera">
-                    		
+                        
                         <!--<center> <i class="fa-5x fa-camera"></i> </center>-->
                         <center><img src="images/camera-icon.png" id="myImage" height="100px"></center>
                     </div>
@@ -166,7 +167,7 @@
                       
                   </div>
                 
-            	</div>
+              </div>
             </div>
 
 
@@ -220,7 +221,7 @@
  
 return false;
 
-	});
+  });
 
                            $('#category').change(function(){
                              var cate = $('#category').val();
