@@ -2,7 +2,7 @@
             /* custom google plus style theme */
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
-  background-color:rgba(251, 251, 251, 1);
+  background-color:#0E952C;
   -webkit-font-smoothing: antialiased;
   font: normal 14px Roboto,arial,sans-serif #0E952C;
 }
@@ -55,13 +55,13 @@ body {
 }
 
 .nav {
-	height:50px;
+	height:100px;
 	background:#0E952C;
 	color:#fff;
 }
 
 .nav .logo img {
-	height:50px;
+	height:100px;
 	outline:none;
 }
 

@@ -24,14 +24,15 @@
             monaca.updateUIStyle("tapme-button", "disable", false);
             
             console.log("PhoneGap is ready");
+             window.mycars = new Array();
         }
         
         function cam(){
 
             var comment = document.getElementById('comment').value;
 
-            if(comment != '')
-            {
+            /*if(comment != '')
+            {*/
                 navigator.camera.getPicture(onSuccess, onFail, 
                     { 
                         quality: 50,
@@ -41,9 +42,12 @@
                 
                 function onSuccess(imageData) 
                     {
+
                         var image = document.getElementById('myImage');
                         image.src = "data:image/jpeg;base64," + imageData;
-                        window.imageUpload = image.src;
+                        mycars[] = "data:image/jpeg;base64," + imageData;
+                        window.imageUpload = "data:image/jpeg;base64," + imageData;
+                        
                         //navigator.notification.alert(image.src);
                     }
                 
@@ -53,10 +57,10 @@
                     }
 
                     uploadPhoto(imageData);
-            } else 
+           /* } else 
                     {
                         navigator.notification.alert('Please type in comment about event first!'); 
-                    }
+                    }*/
 
 
     }
@@ -86,14 +90,21 @@
         var comment = document.getElementById('comment').value;
         var category = document.getElementById('category').value;
 
-        if((comment != '') && (category != ''))
+        if(comment != '')// && (category != ''))
         {
-          locate();
-          uploadPhoto(imageUpload);
-        navigator.notification.alert("Report sent to Gcode Manager", function() {}, " ", "OK")
+          if(category != '')
+          {
+            locate();
+            uploadPhoto(imageUpload);
+            navigator.notification.alert("Report sent to Gcode Manager", function() {}, " ", "OK");
+          } else {
+
+            navigator.notification.alert('Please select category!'); 
+          }
+         
         }  else 
           {
-              navigator.notification.alert('Please select category and create comment!'); 
+              navigator.notification.alert('Please select create comment!'); 
           }
     
 
@@ -125,8 +136,8 @@
                     </div>
                    </div>
                     
-                  <div class="row" style="margin-top:60px;">  
-                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="row" style="margin-top:110px;" tyle="background-color: #fff">  
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fff">
                             <select name="category" class="text-element" id="category">
                                 <option value="">Select Category</option>
                                 <option value="#Polling">Polling</option>
@@ -138,7 +149,7 @@
                               </select>
                       </div>
               
-               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fff">
                
                     <div class="border-rad" id="camera">
                         
@@ -154,18 +165,19 @@
                         <button class="btn btn-success text-btn" id="send" onclick="send();" ><i class="fa fa-upload"></i> Send</button>
                     </div>
                             
-                          
+                        <script>
+                        var arrayLength = myStringArray.length;
+for (var i = 0; i < arrayLength; i++) {
+    alert(myStringArray[i]);
+    //Do something
+}  
+</script>
                            
                            
                            <img  src="images/g-code-logo2.png"  class="border-rad" />
                            
-                           <div class="col-sm-6 col-xs-6">
-                               <img src="images/g-code-logo2.png" class="border-rad" />
-                           </div>
-                           
-                           <div class="col-sm-6 col-xs-6">
-                               <img src="images/g-code-logo2.png" class="border-rad" />
-                           </div>
+                  <div class="col-sm-6 col-xs-6"><img src="images/g-code-logo2.png" class="border-rad" /></div>
+                  <div class="col-sm-6 col-xs-6"><img src="images/g-code-logo2.png" class="border-rad" /></div>
                             
                      </div>
                       
@@ -181,7 +193,7 @@
     function locate(){
 
     var suc = function(p) {
-        navigator.notification.alert(p.coords.latitude + " " + p.coords.longitude);
+        //navigator.notification.alert(p.coords.latitude + ", " + p.coords.longitude);
        $.post( "http://exolvetechnologies.com/gcode/api/location", 
             { gcode: 'USER' , lat: p.coords.latitude , lng: p.coords.longitude }, function( data ) {
             $( ".result" ).html( data );
