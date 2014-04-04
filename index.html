@@ -35,14 +35,15 @@
                 navigator.camera.getPicture(onSuccess, onFail, 
                     { 
                         quality: 50,
-                       /* destinationType: Camera.DestinationType.DATA_URL*/
-                        destinationType: Camera.DestinationType.FILE_URI
+                        destinationType: Camera.DestinationType.DATA_URL
+                       /* destinationType: Camera.DestinationType.FILE_URI*/
                     });
                 
                 function onSuccess(imageData) 
                     {
                         var image = document.getElementById('myImage');
                         image.src = "data:image/jpeg;base64," + imageData;
+                        window.imageUpload = image.src;
                         //navigator.notification.alert(image.src);
                     }
                 
@@ -80,7 +81,23 @@
         }
 
 
-   
+   function send()
+   {
+        var comment = document.getElementById('comment').value;
+        var category = document.getElementById('category').value;
+
+        if((comment != '') && (category != ''))
+        {
+          locate();
+          uploadPhoto(imageUpload);
+        navigator.notification.alert("Report sent to Gcode Manager", function() {}, " ", "OK")
+        }  else 
+          {
+              navigator.notification.alert('Please select category and create comment!'); 
+          }
+    
+
+   }
             
         function onTapButton(){
             // Triggers when button is tapped: defined in index.ui
@@ -126,7 +143,7 @@
                     <div class="border-rad" id="camera">
                         
                         <!--<center> <i class="fa-5x fa-camera"></i> </center>-->
-                        <center><img src="images/camera-icon.png" id="myImage" height="100px"></center>
+                    <center><img src="images/camera-icon.png" id="myImage" onclick="cam();" height="100px"></center>
                     </div>
                     
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -134,7 +151,7 @@
                     </div>
                     
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                        <button class="btn btn-success text-btn" id="send" onclick="cam();"><i class="fa fa-upload"></i> Send</button>
+                        <button class="btn btn-success text-btn" id="send" onclick="send();" ><i class="fa fa-upload"></i> Send</button>
                     </div>
                             
                           
