@@ -1,0 +1,241 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>G-Code</title>
+
+       <script src="cordova.js"></script>
+   <!--  <script src="plugins/plugin-loader.js"></script> -->
+    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/extras.css" rel="stylesheet"> 
+    <script>
+        // Set virtual screen width size to 640 pixels
+        //monaca.viewport({width: 640});
+
+        // PhoneGap event handler
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            // Update Toolbar Header
+            monaca.updateUIStyle("header", "title", "Your First App");
+            monaca.updateUIStyle("tapme-button", "disable", false);
+            
+            console.log("PhoneGap is ready");
+        }
+        
+        function cam(){
+
+            var comment = document.getElementById('comment').value;
+
+            if(comment != '')
+            {
+                navigator.camera.getPicture(onSuccess, onFail, 
+                    { 
+                        quality: 50,
+                       /* destinationType: Camera.DestinationType.DATA_URL*/
+                        destinationType: Camera.DestinationType.FILE_URI
+                    });
+                
+                function onSuccess(imageData) 
+                    {
+                        var image = document.getElementById('myImage');
+                        image.src = "data:image/jpeg;base64," + imageData;
+                        //navigator.notification.alert(image.src);
+                    }
+                
+                function onFail(message) 
+                    {
+                        navigator.notification.alert('Failed because: ' + message);
+                    }
+
+                    uploadPhoto(imageData);
+            } else 
+                    {
+                        navigator.notification.alert('Please type in comment about event first!'); 
+                    }
+
+
+    }
+
+    function uploadPhoto(imageURI) {
+            var options = new FileUploadOptions();
+            options.fileKey="file";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
+
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+
+            options.params = params;
+
+            var ft = new FileTransfer();
+            ft.upload(imageURI, "http://exolvetechnologies.com/gcode/api/upload", win, fail, options);
+
+            location();
+          
+        }
+
+
+    function location(){
+
+    var suc = function(p) {
+        navigator.notification.alert(p.coords.latitude + " " + p.coords.longitude);
+       $.post( "http://exolvetechnologies.com/gcode/api/location", 
+            { gcode: 'USER' , lat: p.coords.latitude , lng: p.coords.longitude }, function( data ) {
+            $( ".result" ).html( data );
+          });
+    };
+    var locFail = function() {};
+    navigator.geolocation.getCurrentPosition(suc, locFail);
+
+     
+        }
+            
+        function onTapButton(){
+            // Triggers when button is tapped: defined in index.ui
+            navigator.notification.alert("HelloWorld", function() {}, " ", "OK")
+        }
+    </script>       
+
+  </head>
+  <body>
+
+
+			<div class="container">
+            	<div class="row">
+                
+                	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                         <nav class="nav nav-stacked navbar-fixed-top">
+                        	<a href="#" class="logo"><img src="images/g-code-logo.jpg" /></a>
+                            
+                            <ul>
+                            	<li><a href="#">About <i class="fa fa-location-arrow"></i></a></li>
+                            </ul>
+                         </nav>	
+
+                    </div>
+                   </div>
+                    
+                  <div class="row" style="margin-top:60px;">  
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <select name="category" class="text-element" id="category">
+                                <option value="">Select Category</option>
+                                <option value="#Polling">Polling</option>
+                                <option value="#Security">Security</option>
+                                <option value="#Health">Health</option>
+                                <option value="#Flood">Flood</option>
+                                <option value="#Traffic">Traffic</option>
+                                <option value="#CivilDisturbance">Civil Disturbance</option>
+                              </select>
+                      </div>
+              
+               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+               
+                    <div class="border-rad" id="camera">
+                    		
+                        <!--<center> <i class="fa-5x fa-camera"></i> </center>-->
+                        <center><img src="images/camera-icon.png" id="myImage" height="100px"></center>
+                    </div>
+                    
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <textarea id="comment" rows="5" class="text-element1"></textarea>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                        <button class="btn btn-success text-btn" id="send" onclick="cam();"><i class="fa fa-upload"></i> Send</button>
+                    </div>
+                            
+                          
+                           
+                           
+                           <img  src="images/g-code-logo2.png"  class="border-rad" />
+                           
+                           <div class="col-sm-6 col-xs-6">
+                               <img src="images/g-code-logo2.png" class="border-rad" />
+                           </div>
+                           
+                           <div class="col-sm-6 col-xs-6">
+                               <img src="images/g-code-logo2.png" class="border-rad" />
+                           </div>
+                            
+                     </div>
+                      
+                  </div>
+                
+            	</div>
+            </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+   
+    
+   <!--  <script type="text/javascript">
+         $(document).ready(function()
+            {
+                         
+    function addLocation(event) {
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            app.showAlert(position.coords.latitude + ',' + position.coords.longitude);
+        },
+        function() {
+            app.showAlert('Error getting location');
+        });
+    return false;
+        }          
+                          
+              
+                         $('#camera').click(function(event){
+                            
+                    event.preventDefault();
+    if (!navigator.camera) {
+        app.showAlert("Camera API not supported on this device", "Error");
+        return;
+    }
+
+    var options =   {   quality: 50,
+                      
+                        targetWidth: 1000,
+                 targetHeight: 1000,
+                 destinationType: Camera.DestinationType.FILE_URI,
+                 encodingType: Camera.EncodingType.JPEG,
+                 sourceType: Camera.PictureSourceType.CAMERA
+                    };
+
+     navigator.camera.getPicture(
+        function(imageData) {
+            $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
+        },
+        function() {
+            app.showAlert('Error taking picture', 'Error');
+        },
+        options);
+ 
+return false;
+
+	});
+
+                           $('#category').change(function(){
+                             var cate = $('#category').val();
+                                     alert(cate);  
+                                                         
+                         });
+                          
+                          
+                          $('#send').click(function(){
+                             var comment = $('#comment').val();
+                                addLocation(event);
+                          
+                             
+                         });
+                     });
+      </script> -->
+  </body>
+</html>
