@@ -24,20 +24,20 @@
             monaca.updateUIStyle("tapme-button", "disable", false);
             
             console.log("PhoneGap is ready");
-             window.mycars = new Array();
+             //window.mycars = new Array();
         }
         
         function cam(){
 
-            var comment = document.getElementById('comment').value;
+            //var comment = document.getElementById('comment').value;
 
             /*if(comment != '')
             {*/
                 navigator.camera.getPicture(onSuccess, onFail, 
                     { 
                         quality: 50,
-                        destinationType: Camera.DestinationType.DATA_URL
-                       /* destinationType: Camera.DestinationType.FILE_URI*/
+                        /*destinationType: Camera.DestinationType.DATA_URL*/
+                        destinationType: Camera.DestinationType.FILE_URI
                     });
                 
                 function onSuccess(imageData) 
@@ -45,8 +45,8 @@
 
                         var image = document.getElementById('myImage');
                         image.src = "data:image/jpeg;base64," + imageData;
-                        mycars[] = "data:image/jpeg;base64," + imageData;
-                        window.imageUpload = "data:image/jpeg;base64," + imageData;
+                      /*  mycars[] = "data:image/jpeg;base64," + imageData;
+                        window.imageUpload = "data:image/jpeg;base64," + imageData;*/
                         
                         //navigator.notification.alert(image.src);
                     }
@@ -56,7 +56,7 @@
                         navigator.notification.alert('Failed because: ' + message);
                     }
 
-                    uploadPhoto(imageData);
+                    //uploadPhoto(imageData);
            /* } else 
                     {
                         navigator.notification.alert('Please type in comment about event first!'); 
@@ -95,7 +95,7 @@
           if(category != '')
           {
             locate();
-            uploadPhoto(imageUpload);
+            uploadPhoto();
             navigator.notification.alert("Report sent to Gcode Manager", function() {}, " ", "OK");
           } else {
 
